@@ -1,0 +1,47 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="row text-center">
+    <div class="col-md-6">
+        <div class="card bg-success text-white mb-3">
+            <div class="card-body">
+                <h5>Total Income</h5>
+                <h3>₹{{ income }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card bg-danger text-white mb-3">
+            <div class="card-body">
+                <h5>Total Expense</h5>
+                <h3>₹{{ expense }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-md-12">
+        <div class="card bg-primary text-white mb-3">
+            <div class="card-body">
+                <h5>Balance</h5>
+                <h3>₹{{ balance }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h4>Transactions</h4>
+<ul class="list-group">
+    {% for t in transactions %}
+        <li class="list-group-item d-flex justify-content-between">
+            <span>{{ t.category }} ({{ t.transaction_type }})</span>
+            <strong>₹{{ t.amount }}</strong>
+        </li>
+    {% empty %}
+        <li class="list-group-item">No transactions found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
