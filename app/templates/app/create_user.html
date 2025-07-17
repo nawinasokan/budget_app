@@ -1,10 +1,8 @@
 {% extends 'app/base.html' %}
 {% load form_tags %}
-
 {% block content %}
 <div class="container">
-        
-    <h2 class="mx-4 mt-2">Add Transaction</h2>
+    <h2 class="mx-4 mt-2">Create New User</h2>
     <div class="card shadow-sm border-0 rounded-4 p-4 bg-light">
         <form method="post" novalidate>
             {% csrf_token %}
@@ -21,7 +19,7 @@
             </div>
 
             <div class="mt-4 d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary btn-lg px-5">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg px-5">Create User</button>
             </div>
         </form>
     </div>

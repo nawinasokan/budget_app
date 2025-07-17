@@ -1,0 +1,92 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h2>All Users</h2>
+<table class='table table-bordered table-striped'>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        {% if user.is_superuser %}
+            <th>Actions</th>
+        {% endif %}
+    </tr>
+  {% for u in users %}
+    <tr>
+        <td>{{ u.user.username }}</td>
+        <td>{{ u.user.email }}</td>
+        <td>{{ u.user.first_name }}</td>
+        <td>{{ u.user.last_name }}</td>
+        <td>{{ u.phone_number }}</td>
+        {% if user.is_superuser %}
+        <td>
+            <button class="btn btn-sm btn-primary" 
+                    onclick="openEditModal('{{ u.user.id }}', '{{ u.user.username }}', '{{ u.user.email }}', '{{ u.phone_number }}', '{{ u.user.first_name }}', '{{ u.user.last_name }}')">
+                Edit
+            </button>
+            <form action="{% url 'delete_user' u.user.id %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this user?')">Delete</button>
+            </form>
+        </td>
+        {% endif %}
+  </tr>
+  {% endfor %}
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" action="{% url 'update_user' %}">
+      {% csrf_token %}
+      <input type="hidden" id="edit_user_id" name="user_id">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-2">
+            <label>Username</label>
+            <input type="text" class="form-control" id="edit_username" disabled>
+          </div>
+          <div class="mb-2">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" id="edit_email">
+          </div>
+          <div class="mb-2">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" name="phone_number" id="edit_phone">
+          </div>
+          <div class="mb-2">
+            <label>First Name</label>
+            <input type="text" class="form-control" name="first_name" id="edit_firstname">
+          </div>
+          <div class="mb-2">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="last_name" id="edit_lastname">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  function openEditModal(id, username, email, phone, firstName, lastName) {
+    document.getElementById('edit_user_id').value = id;
+    document.getElementById('edit_username').value = username;
+    document.getElementById('edit_email').value = email;
+    document.getElementById('edit_phone').value = phone;
+    document.getElementById('edit_firstname').value = firstName;
+    document.getElementById('edit_lastname').value = lastName;
+
+    new bootstrap.Modal(document.getElementById('editUserModal')).show();
+  }
+</script>
+{% endblock %}

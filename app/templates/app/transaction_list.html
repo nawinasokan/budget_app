@@ -2,7 +2,7 @@
 {% block content %}
 <h2>Transaction History</h2>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>S.No</th>
@@ -27,7 +27,7 @@
     </tr>
     {% empty %}
     <tr>
-      <td colspan="5">No transactions available.</td>
+      <td colspan="7">No transactions available.</td>
     </tr>
     {% endfor %}
   </tbody>

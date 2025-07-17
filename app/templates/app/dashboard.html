@@ -1,47 +1,61 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-<h2>Dashboard</h2>
+<div class="container mt-4">
+    <div class="row g-3 text-center">
+        <div class="col-12 col-md-4">
+            <div class="card text-dark h-100 shadow border-0" style="background-color: #5ace75;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Income</h5>
+                    <h3 class="card-text">₹{{ income }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card text-white h-100 shadow border-0" style="background-color: #bd4242;">
+                <div class="card-body">
+                    <h5 class="card-title">Total Expense</h5>
+                    <h3 class="card-text">₹{{ expense }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card text-dark h-100 shadow border-0" style="background-color: #3d85d6;">
+                <div class="card-body">
+                    <h5 class="card-title">Balance</h5>
+                    <h3 class="card-text">₹{{ balance }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="row text-center">
-    <div class="col-md-6">
-        <div class="card bg-success text-white mb-3">
-            <div class="card-body">
-                <h5>Total Income</h5>
-                <h3>₹{{ income }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card bg-danger text-white mb-3">
-            <div class="card-body">
-                <h5>Total Expense</h5>
-                <h3>₹{{ expense }}</h3>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row text-center">
-    <div class="col-md-12">
-        <div class="card bg-primary text-white mb-3">
-            <div class="card-body">
-                <h5>Balance</h5>
-                <h3>₹{{ balance }}</h3>
-            </div>
-        </div>
-    </div>
-</div>
+    <hr class="my-4">
 
-<hr>
-<h4>Transactions</h4>
-<ul class="list-group">
-    {% for t in transactions %}
-        <li class="list-group-item d-flex justify-content-between">
-            <span>{{ t.category }} ({{ t.transaction_type }})</span>
-            <strong>₹{{ t.amount }}</strong>
+    <h4 class="text-center mb-3">Transactions</h4>
+    <ul class="list-group">
+        <!-- Static Header -->
+        <li class="list-group-item d-flex justify-content-between fw-bold text-white bg-secondary">
+            <span>Category</span>
+            <span>Amount</span>
         </li>
-    {% empty %}
-        <li class="list-group-item">No transactions found.</li>
-    {% endfor %}
-</ul>
+
+        <!-- Transactions -->
+        {% for t in transactions %}
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+            {% if t.transaction_type == 'income' %}
+            style="background-color: #c1e7ca;"
+            {% else %}
+            style="background-color: #e9c5c8;"
+            {% endif %} >
+                <span class="fw-semibold">{{ t.category }} 
+                    <small class="text-muted">({{ t.transaction_type }})</small>
+                </span>
+                <strong>₹{{ t.amount }}</strong>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center">No transactions found.</li>
+        {% endfor %}
+    </ul>
+
+</div>
 {% endblock %}

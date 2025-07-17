@@ -1,6 +1,10 @@
 <!-- planner/templates/planner/sidebar.html -->
 <div class="list-group">
     <a href="{% url 'dashboard' %}" class="list-group-item list-group-item-action">Dashboard</a>
-    <a href="{% url 'add_transaction' %}" class="list-group-item list-group-item-action">Add Transaction</a>
     <a href="{% url 'transaction_list' %}" class="list-group-item list-group-item-action">Transaction History</a>
+    <a href="{% url 'user_list' %}" class="list-group-item list-group-item-action">User List</a>
+    <a href="{% url 'add_transaction' %}" class="list-group-item list-group-item-action">Add Transaction</a>
+    {% if user.is_superuser %}
+        <a href="{% url 'create_user' %}" class="list-group-item list-group-item-action">Create User</a>
+    {% endif %}
 </div>
