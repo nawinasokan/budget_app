@@ -1,20 +1,32 @@
 <!-- planner/templates/planner/navbar.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'index' %}">Budget Planner</a>
-    <div class="d-flex">
-        {% if user.is_authenticated %}
-            <span class="navbar-text text-white me-3">{{ user.username }}</span>
-            <form method="post" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
+    
+    <!-- Sidebar toggle button -->
+    <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
+      aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle sidebar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Brand centered on mobile, left on larger screens -->
+    <a class="navbar-brand mx-auto d-lg-none" href="{% url 'index' %}">Budget Planner</a>
+    <a class="navbar-brand d-none d-lg-block" href="{% url 'index' %}">Budget Planner</a>
+
+    <!-- Right-side user section -->
+    <div class="d-flex align-items-center ms-auto flex-shrink-0">
+      {% if user.is_authenticated %}
+        <span class="text-white me-2 fw-semibold d-none d-sm-inline">{{ user.username }}</span>
+        <form method="post" action="{% url 'logout' %}" class="d-inline">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
+        </form>
+      {% else %}
+        {% if request.path == '/login/' %}
+          <a class="btn btn-outline-light btn-sm" href="{% url 'index' %}">Go to Home</a>
         {% else %}
-            {% if request.path == '/login/' %}
-                <a class="btn btn-outline-light btn-sm" href="{% url 'index' %}">Go to Home</a>
-            {% else %}
-                <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Login</a>
-            {% endif %}        {% endif %} 
+          <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Login</a>
+        {% endif %}
+      {% endif %}
     </div>
   </div>
 </nav>

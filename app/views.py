@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .forms import UserRegisterForm
 from .models import Transaction, UserProfile
 from django.contrib import messages
+from django import forms
 
 def index(request):
     return render(request, 'app/index.html')
@@ -38,9 +39,6 @@ def dashboard(request):
     }
     return render(request, 'app/dashboard.html', context)
 
-from .models import Transaction
-from django import forms
-
 class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
@@ -55,7 +53,7 @@ def add_transaction(request):
             transaction.user = request.user
             transaction.save()
             messages.success(request, "Transaction added.")
-            return redirect('dashboard')
+            return redirect('add_transaction')
     else:
         form = TransactionForm()
     return render(request, 'app/add_transaction.html', {'form': form})
