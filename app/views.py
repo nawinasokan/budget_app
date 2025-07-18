@@ -66,6 +66,14 @@ def transaction_list(request):
     transactions = Transaction.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'app/transaction_list.html', {'transactions': transactions})
 
+
+@login_required
+def delete_transaction(request, transaction_id):
+    transaction = get_object_or_404(Transaction, id=transaction_id)
+    transaction.delete()
+    messages.success(request, "Transaction deleted.")
+    return redirect('transaction_list')
+
 @login_required
 def user_list(request):
     users = UserProfile.objects.select_related('user').all()
@@ -99,6 +107,5 @@ def update_user(request):
 
 def delete_user(request, pk):
     user_profile = get_object_or_404(UserProfile, pk=pk)
-    print(user_profile,'id')
     user_profile.user.delete()
     return redirect('user_list')
