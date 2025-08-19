@@ -126,4 +126,4 @@ python manage.py test
 - **LinkedIn:** [https://linkedin.com/in/naiwn-a-dev]  
 
 ## 🌐 Live Url
-**Visit the portfolio:** [https://nawindev.vercel.app/]
+**Visit the portfolio:** [https://budget-app-ddms.onrender.com/]
