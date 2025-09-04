@@ -8,3 +8,4 @@ psycopg2-binary==2.9.10
 python-dotenv==1.1.1
 sqlparse==0.5.3
 google-generativeai
+pandas
