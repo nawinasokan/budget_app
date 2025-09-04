@@ -21,6 +21,11 @@
         <i class="bi bi-plus-circle"></i> Add Transaction
       </a>
     </li>
+    <li class="nav-item mb-1">
+      <a href="{% url 'reports_from_ai' %}" class="nav-link text-white d-flex align-items-center gap-2">
+        <i class="bi bi-filetype-ai"></i> Smart Reports
+      </a>
+    </li>
     {% if user.is_superuser %}
     <li class="nav-item mb-1">
       <a href="{% url 'create_user' %}" class="nav-link text-white d-flex align-items-center gap-2">

@@ -6,3 +6,4 @@ venv/
 env/
 common_env/
 db.sqlite3
+.env

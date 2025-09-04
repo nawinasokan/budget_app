@@ -1,0 +1,77 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3 text-center" style="font-weight:bold;">
+        AI Report Generator
+    </h2>
+
+    <!-- Prompt Form -->
+    <form id="aiQueryForm" method="get" action="{% url 'reports_from_ai' %}">
+        <div class="input-group mb-3">
+            <input type="text" name="user_prompt" id="userPrompt"
+                   class="form-control" placeholder="Enter your request here..."
+                   value="{{ query|default:'' }}">
+            <button class="btn btn-primary" type="submit">Generate</button>
+        </div>
+        <div id="promptError" class="alert alert-danger d-none"></div>
+    </form>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            {% if error %}
+                <div class="alert alert-danger text-center">
+                    {{ error }}
+                </div>
+            {% elif no_records %}
+                <div class="alert alert-warning text-center">
+                    No records matched your request.
+                </div>
+            {% elif rows %}
+                <h4 class="mb-3">Results for "{{ query }}"</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th style="font-weight:bold;">S.No</th>
+                                {% for col in columns %}
+                                    <th style="font-weight:bold;">
+                                        {{ col|title }}
+                                    </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in rows %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                {% for cell in row %}
+                                    <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted text-center">Enter a request above to generate a report.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- JS Validation -->
+<script>
+document.getElementById("aiQueryForm").addEventListener("submit", function(e) {
+    const prompt = document.getElementById("userPrompt").value.trim();
+    const errorDiv = document.getElementById("promptError");
+
+    if (prompt.length < 10) {
+        e.preventDefault();
+        errorDiv.textContent = "❌ Please enter at least 10 characters.";
+        errorDiv.classList.remove("d-none");
+    } else {
+        errorDiv.classList.add("d-none");
+    }
+});
+</script>
+{% endblock %}
