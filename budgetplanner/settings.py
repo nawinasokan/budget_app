@@ -148,3 +148,6 @@ AUTH_PROFILE_MODULE = 'planner.UserProfile'
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'index'
+
+
+AI_REPORT_ALLOWED_TABLES = ['app_transcation', 'auth_user']
